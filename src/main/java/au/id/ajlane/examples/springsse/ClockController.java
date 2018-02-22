@@ -1,6 +1,5 @@
 package au.id.ajlane.examples.springsse;
 
-import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +25,11 @@ public class ClockController {
     }
 
     @Scheduled(fixedRate = 100)
-    public void tick() throws IOException {
+    public void tick() {
         for (SseEmitter emitter : emitters) {
             try {
                 emitter.send(Instant.now().toString(), MediaType.TEXT_PLAIN);
-            } catch (ClientAbortException ex){
+            } catch (IOException e) {
                 emitter.complete();
             }
         }
