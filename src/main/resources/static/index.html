@@ -1,0 +1,11 @@
+<html>
+<body>
+<h1 id="clock"></h1>
+<script>
+    var source = new EventSource("/clock");
+    source.onmessage = function(event){
+        document.getElementById("clock").innerText = event.data;
+    };
+</script>
+</body>
+</html>
